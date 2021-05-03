@@ -1,11 +1,14 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class BrickGame extends JFrame {
+	public static final String proName = "BrickGame";
 
 	private JPanel contentPane;
 
@@ -18,6 +21,8 @@ public class BrickGame extends JFrame {
 				try {
 					BrickGame frame = new BrickGame();
 					frame.setVisible(true);
+					frame.setTitle(proName);
+					//frame.setSize(1080, 720);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -35,6 +40,7 @@ public class BrickGame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		
 	}
-
 }
