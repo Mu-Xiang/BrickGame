@@ -30,15 +30,19 @@ public class Paddle extends MoveableObject {
     public void processKeyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		switch (keyCode) {
+		/*
 		case KeyEvent.VK_UP:
 			this.setDirection(KeyEvent.VK_UP);
 			break;
+		*/
 		case KeyEvent.VK_RIGHT:
 			this.setDirection(KeyEvent.VK_RIGHT);
 			break;
+		/*
 		case KeyEvent.VK_DOWN:
 			this.setDirection(KeyEvent.VK_DOWN);
 			break;
+		*/
 		case KeyEvent.VK_LEFT:
 			this.setDirection(KeyEvent.VK_LEFT);
 			break;
@@ -46,6 +50,6 @@ public class Paddle extends MoveableObject {
 			break;
 		}
 		super.move();
-        System.out.println(this.getDirection());
+        //System.out.println(this.getDirection());
 	}
 }
