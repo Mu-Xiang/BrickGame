@@ -65,6 +65,7 @@ public abstract class MoveableObject extends GameObject {
             default:
                 break;
         }
+        direction = 0;
     }
 
     public boolean collidesWith(GameObject g) {
