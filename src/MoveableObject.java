@@ -6,7 +6,7 @@ public abstract class MoveableObject extends GameObject {
     protected int deltaX;
     protected int deltaY;
     protected int strength;
-    protected int direction = KeyEvent.VK_RIGHT;
+    protected int direction;
 
     public MoveableObject() {
         super();
