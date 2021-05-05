@@ -120,6 +120,7 @@ public class BrickGame extends JFrame implements KeyListener {
 		gamePause = true;
 		timerMin = 0;
 		timerSec = 0;
+		score = 0;
 		
 		Graphics g = getGraphics();
 		initDraw(g);
@@ -174,12 +175,12 @@ public class BrickGame extends JFrame implements KeyListener {
 					Graphics g = getGraphics();
 					//Area
 					g.setColor(Color.LIGHT_GRAY);
-					g.fillRect(12, 36, 696, 386);
+					g.fillRect(12, 36, 696, 390);
 					//Paddle
 					paddle.draw(g);
 					//Ball
+					
 					if (!gamePause) ball.move();
-					ball.draw(g);
 				}
 			}
 		}

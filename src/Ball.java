@@ -13,8 +13,8 @@ public class Ball extends MoveableObject {
 	
 	public Ball(int x, int y, int width, int height, Color color) {
 		super(x, y, width, height, color);
-		delta = 2;
-        this.setDeltaX(delta);
+		delta = 3;
+        this.setDeltaX(2 * delta + 1);
         this.setDeltaY(delta);
         directionX = KeyEvent.VK_RIGHT;
         directionY = KeyEvent.VK_UP;
@@ -28,16 +28,22 @@ public class Ball extends MoveableObject {
 		return delta;
 	}
 	
-	public void setDirectionX(int directionX) {
-		this.directionX = directionX;
+	public void switchDirectionX() {
+		if (directionX == KeyEvent.VK_RIGHT)
+			directionX = KeyEvent.VK_LEFT;
+		else if (directionX == KeyEvent.VK_LEFT)
+			directionX = KeyEvent.VK_RIGHT;
 	}
 	
 	public int getDirectionX() {
 		return directionX;
 	}
 	
-	public void setDirectionY(int directionY) {
-		this.directionY = directionY;
+	public void switchDirectionY() {
+		if (directionY == KeyEvent.VK_UP)
+			directionY = KeyEvent.VK_DOWN;
+		else if (directionY == KeyEvent.VK_DOWN)
+			directionY = KeyEvent.VK_UP;
 	}
 	
 	public int getDirectionY() {
@@ -45,6 +51,20 @@ public class Ball extends MoveableObject {
 	}
 	
 	public void move() {
+		//border detect
+		if (this.getY() <= 36 + delta) {
+			this.setY(36 + delta);
+			switchDirectionY();
+		}
+		if (this.getX() <= 12 + delta) {
+			this.setX(12 + delta);
+			switchDirectionX();
+		}
+		if (this.getX() + this.getWidth() >= 706 - delta) {
+			this.setX(706 - this.getWidth() - delta);
+			switchDirectionX();
+		}
+    	
 		this.direction = directionX;
 		super.move();
 		this.direction = directionY;

@@ -37,6 +37,7 @@ public class Paddle extends MoveableObject {
 			this.setDirection(KeyEvent.VK_UP);
 			break;
 		*/
+		case KeyEvent.VK_D:
 		case KeyEvent.VK_RIGHT:
 			this.setDirection(KeyEvent.VK_RIGHT);
 			break;
@@ -45,6 +46,7 @@ public class Paddle extends MoveableObject {
 			this.setDirection(KeyEvent.VK_DOWN);
 			break;
 		*/
+		case KeyEvent.VK_A:
 		case KeyEvent.VK_LEFT:
 			this.setDirection(KeyEvent.VK_LEFT);
 			break;

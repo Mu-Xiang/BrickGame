@@ -67,7 +67,13 @@ public abstract class GameObject extends Component {
 		return color;
 	}
 
-	//Center point//
+	public int getCenterX() {
+		return x + width / 2;
+	}
+	
+	public int getCenterY() {
+		return y + height / 2;
+	}
 
 	abstract void draw(Graphics g);
 }
