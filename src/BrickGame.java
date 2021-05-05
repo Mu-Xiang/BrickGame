@@ -161,6 +161,11 @@ public class BrickGame extends JFrame implements KeyListener {
 		ball.draw(g);
 		
 		//Bricks
+		for (int x = 100; x <= 590; x += 70)
+			for (int y = 60; y <= 110; y += 25)
+				bricks.add(new Brick(x, y, 60, 20, Color.YELLOW));
+		for (Brick brick : bricks)
+			brick.draw(g);
 	}
 	
 	private class PaintThread implements Runnable {
@@ -179,8 +184,11 @@ public class BrickGame extends JFrame implements KeyListener {
 					//Paddle
 					paddle.draw(g);
 					//Ball
-					
 					if (!gamePause) ball.move();
+					ball.draw(g);
+					//Bricks
+					for (Brick brick : bricks)
+						brick.draw(g);
 				}
 			}
 		}

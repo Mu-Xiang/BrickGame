@@ -3,6 +3,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 
 public abstract class GameObject extends Component {
+	protected boolean live = true;
 	protected int x;
 	protected int y;
 	protected int width;

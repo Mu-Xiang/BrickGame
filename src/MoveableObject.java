@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 public abstract class MoveableObject extends GameObject {
-	protected boolean live = true;
     protected int deltaX;
     protected int deltaY;
     protected int strength;
