@@ -28,4 +28,9 @@ public class Brick extends GameObject {
         g.setColor(this.getColor());
         g.fillRect(this.getX() + 1, this.getY() + 1, this.getWidth() - 1, this.getHeight() - 1);
 	}
+	
+	void clearDraw(Graphics g) {
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillRect(this.getX(), this.getY(), this.getWidth() + 1, this.getHeight() + 1);
+	}
 }

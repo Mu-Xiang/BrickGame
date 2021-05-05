@@ -77,4 +77,5 @@ public abstract class GameObject extends Component {
 	}
 
 	abstract void draw(Graphics g);
+	abstract void clearDraw(Graphics g);
 }

@@ -122,23 +122,18 @@ public class BrickGame extends JFrame implements KeyListener {
 		timerSec = 0;
 		score = 0;
 		
-		Graphics g = getGraphics();
-		initDraw(g);
+		paddle.clearDraw(getGraphics());
+		ball.clearDraw(getGraphics());
+		initDraw(getGraphics());
 		labelTip.setText("Press space to start the game.");
 	}
 	
 	public void startGame() {
 		gamePause = false;
-		
-		Graphics g = getGraphics();
-		
 	}
 	
 	public void stopGame() {
 		gamePause = true;
-		
-		Graphics g = getGraphics();
-		
 	}
 	
 	public String tipSelect() {
@@ -157,7 +152,7 @@ public class BrickGame extends JFrame implements KeyListener {
 		paddle.draw(g);
 		
 		//Ball
-		ball = new Ball(340, 380, 10, 10, Color.CYAN);
+		ball = new Ball(340, 379, 10, 10, Color.CYAN);
 		ball.draw(g);
 		
 		//Bricks
@@ -176,19 +171,17 @@ public class BrickGame extends JFrame implements KeyListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if (gameStart) {
+				if (gameStart && !gamePause) {
 					Graphics g = getGraphics();
-					//Area
-					g.setColor(Color.LIGHT_GRAY);
-					g.fillRect(12, 36, 696, 390);
-					//Paddle
-					paddle.draw(g);
 					//Ball
-					if (!gamePause) ball.move();
+					ball.clearDraw(g);
+					ball.move();
 					ball.draw(g);
-					//Bricks
+					//collided
+					if (ball.collidesWith(paddle));
+					
 					for (Brick brick : bricks)
-						brick.draw(g);
+						if (ball.collidesWith(brick));
 				}
 			}
 		}
@@ -235,8 +228,17 @@ public class BrickGame extends JFrame implements KeyListener {
 			case KeyEvent.VK_N:
 				if (gamePause) newGame();
 				break;
+			case KeyEvent.VK_RIGHT:
+			case KeyEvent.VK_LEFT:
+			case KeyEvent.VK_D:
+			case KeyEvent.VK_A:
+				if (!gamePause) {
+					paddle.clearDraw(getGraphics());
+					paddle.processKeyPressed(e);
+					paddle.draw(getGraphics());
+				}
+				break;
 			default:
-				if (!gamePause) paddle.processKeyPressed(e);
 				break;
 		}
 	}

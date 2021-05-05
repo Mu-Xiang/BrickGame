@@ -56,4 +56,9 @@ public class Paddle extends MoveableObject {
 		super.move();
         //System.out.println(this.getDirection());
 	}
+
+	void clearDraw(Graphics g) {
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillRect(this.getX(), this.getY(), this.getWidth() + 1, this.getHeight() + 1);
+	}
 }

@@ -64,6 +64,11 @@ public class Ball extends MoveableObject {
 			this.setX(706 - this.getWidth() - delta);
 			switchDirectionX();
 		}
+		
+		if (this.getY() >= 420 + delta) {
+			this.setY(420 + delta);
+			switchDirectionY();
+		}
     	
 		this.direction = directionX;
 		super.move();
@@ -76,6 +81,11 @@ public class Ball extends MoveableObject {
         g.drawOval(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         g.setColor(this.getColor());
         g.fillOval(this.getX() + 1, this.getY() + 1, this.getWidth() - 1, this.getHeight() - 1);
+	}
+	
+	void clearDraw(Graphics g) {
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillOval(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2);
 	}
 
 }
