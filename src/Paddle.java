@@ -16,6 +16,8 @@ public class Paddle extends MoveableObject {
     }
 
     public void draw(Graphics g) {
+    	if (this.getX() < 12 + delta) this.setX(12 + delta);
+    	if (this.getX() + this.getWidth() > 706 - delta) this.setX(706 - delta - this.getWidth());
         g.setColor(Color.BLACK);
         g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         g.setColor(this.getColor());

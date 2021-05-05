@@ -3,6 +3,7 @@ import java.awt.Graphics;
 
 public class Brick extends GameObject {
 	private int health;
+	public static int count = 0;
 	
 	public Brick() {
 		
@@ -10,6 +11,7 @@ public class Brick extends GameObject {
 	
 	public Brick(int x, int y, int width, int height, Color color) {
 		super(x, y, width, height, color);
+		count++;
 	}
 	
 	public int getHealth() {

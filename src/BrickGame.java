@@ -118,6 +118,8 @@ public class BrickGame extends JFrame implements KeyListener {
 	public void newGame() {
 		gameStart = true;
 		gamePause = true;
+		timerMin = 0;
+		timerSec = 0;
 		
 		Graphics g = getGraphics();
 		initDraw(g);
@@ -176,6 +178,7 @@ public class BrickGame extends JFrame implements KeyListener {
 					//Paddle
 					paddle.draw(g);
 					//Ball
+					if (!gamePause) ball.move();
 					ball.draw(g);
 				}
 			}
@@ -190,15 +193,15 @@ public class BrickGame extends JFrame implements KeyListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if (gameStart) {
+				if (gameStart && !gamePause) {
 					if (++timerSec == 60) {
 						timerSec = 0;
 						timerMin++;
 					}
-					timerText = ((timerMin < 10) ? "0" : "") + timerMin + " : " + ((timerSec < 10) ? "0" : "") + timerSec + " ";
-					labelTime.setText(timerText);
-					//System.out.println(timerText);
 				}
+				timerText = ((timerMin < 10) ? "0" : "") + timerMin + " : " + ((timerSec < 10) ? "0" : "") + timerSec + " ";
+				labelTime.setText(timerText);
+				//System.out.println(timerText);
 			}
 		}
 	}
@@ -211,7 +214,7 @@ public class BrickGame extends JFrame implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getKeyCode());
+		//System.out.println(e.getKeyCode());
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_SPACE:
 				if (gameStart) {
@@ -221,7 +224,7 @@ public class BrickGame extends JFrame implements KeyListener {
 				labelTip.setText(tipSelect());
 				break;
 			case KeyEvent.VK_N:
-				
+				if (gamePause) newGame();
 				break;
 			default:
 				if (!gamePause) paddle.processKeyPressed(e);
