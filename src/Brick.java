@@ -32,5 +32,6 @@ public class Brick extends GameObject {
 	void clearDraw(Graphics g) {
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(this.getX(), this.getY(), this.getWidth() + 1, this.getHeight() + 1);
+		count--;
 	}
 }

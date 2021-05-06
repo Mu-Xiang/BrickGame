@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -126,6 +127,7 @@ public class BrickGame extends JFrame implements KeyListener {
 		ball.clearDraw(getGraphics());
 		initDraw(getGraphics());
 		labelTip.setText("Press space to start the game.");
+		getGraphics().drawString("        ", 285, 200);
 	}
 	
 	public void startGame() {
@@ -156,9 +158,9 @@ public class BrickGame extends JFrame implements KeyListener {
 		ball.draw(g);
 		
 		//Bricks
-		for (int x = 100; x <= 590; x += 70)
-			for (int y = 60; y <= 110; y += 25)
-				bricks.add(new Brick(x, y, 60, 20, Color.YELLOW));
+		for (int x = 0; x < 10; x++)
+			for (int y = 0; y < 6; y++)
+				bricks.add(new Brick(65 + x * 60, 60 + y * 25, 50, 20, Color.YELLOW));
 		for (Brick brick : bricks)
 			brick.draw(g);
 	}
@@ -167,7 +169,7 @@ public class BrickGame extends JFrame implements KeyListener {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(40);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -177,11 +179,67 @@ public class BrickGame extends JFrame implements KeyListener {
 					ball.clearDraw(g);
 					ball.move();
 					ball.draw(g);
-					//collided
-					if (ball.collidesWith(paddle));
 					
-					for (Brick brick : bricks)
-						if (ball.collidesWith(brick));
+					//Collide
+					switch (ball.collidesWith(paddle)) {
+						case KeyEvent.VK_UP:
+							ball.switchDirectionY();
+							break;
+						case KeyEvent.VK_DOWN:
+							ball.switchDirectionY();
+							break;
+						case KeyEvent.VK_LEFT:
+							ball.switchDirectionX();
+							break;
+						case KeyEvent.VK_RIGHT:
+							ball.switchDirectionX();
+							break;
+						default:
+							break;
+					}
+					
+					for (Iterator<Brick> it = bricks.iterator(); it.hasNext(); ) {
+						Brick brick = it.next();
+						switch (ball.collidesWith(brick)) {
+							case KeyEvent.VK_UP:
+								System.out.println("up");
+								ball.switchDirectionY();
+								brick.setLive(false);
+								break;
+							case KeyEvent.VK_DOWN:
+								System.out.println("down");
+								ball.switchDirectionY();
+								brick.setLive(false);
+								break;
+							case KeyEvent.VK_LEFT:
+								System.out.println("left");
+								brick.setLive(false);
+								break;
+							case KeyEvent.VK_RIGHT:
+								System.out.println("right");
+								ball.switchDirectionX();
+								brick.setLive(false);
+								break;
+							default:
+								break;
+						}
+						if (!(brick.isLive())) {
+							brick.clearDraw(g);
+							//ball.draw(g);
+							it.remove();
+							break;
+						}
+					}
+
+					//game detect
+					if (Brick.count == 0) {
+						gameStart = false;
+						gamePause = true;
+						g.setColor(Color.GREEN);
+						g.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+						g.drawString("You Win.", 285, 200);
+					}
+						
 				}
 			}
 		}

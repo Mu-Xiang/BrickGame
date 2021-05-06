@@ -13,8 +13,8 @@ public class Ball extends MoveableObject {
 	
 	public Ball(int x, int y, int width, int height, Color color) {
 		super(x, y, width, height, color);
-		delta = 3;
-        this.setDeltaX(2 * delta + 1);
+		delta = 2;
+        this.setDeltaX(2 * delta - 1);
         this.setDeltaY(delta);
         directionX = KeyEvent.VK_RIGHT;
         directionY = KeyEvent.VK_UP;
@@ -85,7 +85,8 @@ public class Ball extends MoveableObject {
 	
 	void clearDraw(Graphics g) {
 		g.setColor(Color.LIGHT_GRAY);
-		g.fillOval(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2);
+		g.drawOval(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		g.fillOval(this.getX() + 1, this.getY() + 1, this.getWidth() - 1, this.getHeight() - 1);
 	}
 
 }

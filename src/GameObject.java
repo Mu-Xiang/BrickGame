@@ -27,6 +27,14 @@ public abstract class GameObject extends Component {
 		this.height = height;
 		this.color = color;
 	}
+	
+	public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
+    }
 
 	public void setX(int x) {
 		this.x = x;

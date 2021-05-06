@@ -15,14 +15,6 @@ public abstract class MoveableObject extends GameObject {
         super(x, y, width, height, color);
     }
 
-    public boolean isLive() {
-        return live;
-    }
-
-    public void setLive(boolean live) {
-        this.live = live;
-    }
-
     public int getDeltaX() {
         return deltaX;
     }
@@ -67,13 +59,28 @@ public abstract class MoveableObject extends GameObject {
         direction = 0;
     }
 
-    public boolean collidesWith(GameObject g) {
-        if (this.contains(g.x, g.y) || 
-            this.contains(g.x, g.y + g.getHeight()) ||
-            this.contains(g.x + g.getWidth(), g.y) ||
-            this.contains(g.x + g.getWidth(), g.y + g.getHeight())) {
-                return true;
+    public int collidesWith(GameObject g) {
+        if (this.y + this.height + this.deltaY >= g.getY() && this.y + this.height + this.deltaY <= g.getY() + g.getHeight() &&
+        	this.getCenterX() + this.deltaX >= g.getX() && this.getCenterX() + this.deltaX <= g.getX() + g.getWidth()) {
+        		return KeyEvent.VK_UP;
         }
-        return false;
+    	if (this.y - this.deltaY <= g.getY() + g.getHeight() && this.y + this.deltaY >= g.getY() &&
+    		this.getCenterX() + this.deltaX >= g.getX() && this.getCenterX() + this.deltaX <= g.getX() + g.getWidth()) {
+    			return KeyEvent.VK_DOWN;
+    	}
+    	if (this.x + this.width + this.deltaX >= g.getX() && this.x + this.width + this.deltaX <= g.getX() + g.getWidth() &&
+    		this.getCenterY() + this.deltaY >= g.getY() && this.getCenterY() + this.deltaY <= g.getY() + g.getHeight()) {
+    			return KeyEvent.VK_LEFT;
+    	}
+    	if (this.x - this.deltaX <= g.getX() + g.getWidth() && this.x + this.deltaX >= g.getX() &&
+    		this.getCenterY() + this.deltaY >= g.getY() && this.getCenterY() + this.deltaY <= g.getY() + g.getHeight()) {
+    			return KeyEvent.VK_RIGHT;
+    	}
+    	
+    	return 0;
+    }
+    
+    public String toString() {
+    	return "x=" + x + ",y=" + y;
     }
 }
