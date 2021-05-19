@@ -60,23 +60,26 @@ public abstract class MoveableObject extends GameObject {
     }
 
     public int collidesWith(GameObject g) {
-        if (this.y + this.height + this.deltaY >= g.getY() && this.y + this.height + this.deltaY <= g.getY() + g.getHeight() &&
-        	this.getCenterX() + this.deltaX >= g.getX() && this.getCenterX() + this.deltaX <= g.getX() + g.getWidth()) {
-        		return KeyEvent.VK_UP;
-        }
-    	if (this.y - this.deltaY <= g.getY() + g.getHeight() && this.y + this.deltaY >= g.getY() &&
-    		this.getCenterX() + this.deltaX >= g.getX() && this.getCenterX() + this.deltaX <= g.getX() + g.getWidth()) {
-    			return KeyEvent.VK_DOWN;
+    	if (this.x + this.width + this.deltaX > g.getX() && this.x + this.width <= g.getX()) {
+    		if ((this.getCenterY() + this.deltaY >= g.getY() && this.getCenterY() <= g.getY()) ||
+    			(this.getCenterY() - this.deltaY <= g.getY() + g.getHeight() && this.getCenterY() >= g.getY()))
+    				return KeyEvent.VK_LEFT;
     	}
-    	if (this.x + this.width + this.deltaX >= g.getX() && this.x + this.width + this.deltaX <= g.getX() + g.getWidth() &&
-    		this.getCenterY() + this.deltaY >= g.getY() && this.getCenterY() + this.deltaY <= g.getY() + g.getHeight()) {
-    			return KeyEvent.VK_LEFT;
+    	if (this.x - this.deltaX < g.getX() + g.getWidth() && this.x >= g.getX() + g.getWidth()) {
+    		if ((this.getCenterY() + this.deltaY >= g.getY() && this.getCenterY() <= g.getY()) ||
+        		(this.getCenterY() - this.deltaY <= g.getY() + g.getHeight() && this.getCenterY() >= g.getY()))
+    				return KeyEvent.VK_RIGHT;
     	}
-    	if (this.x - this.deltaX <= g.getX() + g.getWidth() && this.x + this.deltaX >= g.getX() &&
-    		this.getCenterY() + this.deltaY >= g.getY() && this.getCenterY() + this.deltaY <= g.getY() + g.getHeight()) {
-    			return KeyEvent.VK_RIGHT;
+    	if (this.y + this.height + this.deltaY > g.getY() && this.y + this.height <= g.getY()) {
+    		if ((this.getCenterX() + this.deltaX >= g.getX() && this.getCenterX() <= g.getX()) ||
+    			(this.getCenterX() - this.deltaX <= g.getX() + g.getWidth() && this.getCenterX() >= g.getX()))
+    				return KeyEvent.VK_UP;
     	}
-    	
+    	if (this.y - this.deltaY < g.getY() + g.getHeight() && this.y >= g.getY() + g.getHeight()) {
+    		if ((this.getCenterX() + this.deltaX >= g.getX() && this.getCenterX() <= g.getX()) ||
+        		(this.getCenterX() - this.deltaX <= g.getX() + g.getWidth() && this.getCenterX() >= g.getX()))
+    				return KeyEvent.VK_DOWN;
+    	}
     	return 0;
     }
     

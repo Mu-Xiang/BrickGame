@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 public class Paddle extends MoveableObject {
-	private final int delta = 5;
+	private final int delta = 8;
 	
 	public Paddle() {
 		

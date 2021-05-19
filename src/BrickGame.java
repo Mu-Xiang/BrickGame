@@ -1,7 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -10,12 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class BrickGame extends JFrame implements KeyListener {
 	public static final String proName = "BrickGame";
@@ -47,6 +51,8 @@ public class BrickGame extends JFrame implements KeyListener {
 					frame.setVisible(true);
 					frame.setTitle(proName);
 					frame.setSize(720, 480);
+					Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+					frame.setLocation((int) screensize.getWidth() / 2 - frame.getWidth() / 2, (int) screensize.getHeight() / 2 - frame.getHeight() / 2);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -122,12 +128,13 @@ public class BrickGame extends JFrame implements KeyListener {
 		timerMin = 0;
 		timerSec = 0;
 		score = 0;
+		Brick.count = 0;
 		
-		paddle.clearDraw(getGraphics());
-		ball.clearDraw(getGraphics());
-		initDraw(getGraphics());
+		Graphics g = getGraphics();
+		paddle.clearDraw(g);
+		ball.clearDraw(g);
+		initDraw(g);
 		labelTip.setText("Press space to start the game.");
-		getGraphics().drawString("        ", 285, 200);
 	}
 	
 	public void startGame() {
@@ -169,7 +176,7 @@ public class BrickGame extends JFrame implements KeyListener {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(10);
+					Thread.sleep(15);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -184,6 +191,14 @@ public class BrickGame extends JFrame implements KeyListener {
 					switch (ball.collidesWith(paddle)) {
 						case KeyEvent.VK_UP:
 							ball.switchDirectionY();
+							if (ball.getCenterX() >= paddle.getX() && ball.getCenterX() < paddle.getX() + paddle.getWidth() / 5)
+								ball.setDeltaX(ball.getDeltaX() <= 5 ? ball.getDeltaX() + 1 : 5);
+							else if (ball.getCenterX() >= paddle.getX() + paddle.getWidth() / 5 && ball.getCenterX() < paddle.getX() + paddle.getWidth() / 5 * 2)
+								ball.setDeltaX(ball.getDeltaX() >= 2? ball.getDeltaX() - 1 : 2);
+							else if (ball.getCenterX() > paddle.getX() + paddle.getWidth() / 5 * 3 && ball.getCenterX() <= paddle.getX() + paddle.getWidth() / 5 * 4)
+								ball.setDeltaX(ball.getDeltaX() >= 2? ball.getDeltaX() - 1 : 2);
+							else if (ball.getCenterX() > paddle.getX() + paddle.getWidth() / 5 * 4 && ball.getCenterX() <= paddle.getX() + paddle.getWidth())
+								ball.setDeltaX(ball.getDeltaX() <= 5? ball.getDeltaX() + 1 : 5);
 							break;
 						case KeyEvent.VK_DOWN:
 							ball.switchDirectionY();
@@ -202,21 +217,22 @@ public class BrickGame extends JFrame implements KeyListener {
 						Brick brick = it.next();
 						switch (ball.collidesWith(brick)) {
 							case KeyEvent.VK_UP:
-								System.out.println("up");
+								//System.out.println("up");
 								ball.switchDirectionY();
 								brick.setLive(false);
 								break;
 							case KeyEvent.VK_DOWN:
-								System.out.println("down");
+								//System.out.println("down");
 								ball.switchDirectionY();
 								brick.setLive(false);
 								break;
 							case KeyEvent.VK_LEFT:
-								System.out.println("left");
+								//System.out.println("left");
+								ball.switchDirectionX();
 								brick.setLive(false);
 								break;
 							case KeyEvent.VK_RIGHT:
-								System.out.println("right");
+								//System.out.println("right");
 								ball.switchDirectionX();
 								brick.setLive(false);
 								break;
@@ -225,19 +241,23 @@ public class BrickGame extends JFrame implements KeyListener {
 						}
 						if (!(brick.isLive())) {
 							brick.clearDraw(g);
-							//ball.draw(g);
 							it.remove();
 							break;
 						}
 					}
 
 					//game detect
+					if (ball.getY() >= 420 + ball.getDeltaY()) {
+						gameStart = false;
+						gamePause = true;
+						JOptionPane.showMessageDialog(null, "Game Over", "Message", JOptionPane.CLOSED_OPTION);
+						labelTip.setText(tipSelect());
+					}
 					if (Brick.count == 0) {
 						gameStart = false;
 						gamePause = true;
-						g.setColor(Color.GREEN);
-						g.setFont(new Font("Times New Roman", Font.PLAIN, 32));
-						g.drawString("You Win.", 285, 200);
+						JOptionPane.showMessageDialog(null, "You Win", "Message", JOptionPane.CLOSED_OPTION);
+						labelTip.setText(tipSelect());
 					}
 						
 				}
@@ -285,6 +305,9 @@ public class BrickGame extends JFrame implements KeyListener {
 				break;
 			case KeyEvent.VK_N:
 				if (gamePause) newGame();
+				break;
+			case KeyEvent.VK_O:
+				Brick.count = 0;
 				break;
 			case KeyEvent.VK_RIGHT:
 			case KeyEvent.VK_LEFT:

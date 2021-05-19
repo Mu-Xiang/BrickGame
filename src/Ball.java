@@ -14,7 +14,7 @@ public class Ball extends MoveableObject {
 	public Ball(int x, int y, int width, int height, Color color) {
 		super(x, y, width, height, color);
 		delta = 2;
-        this.setDeltaX(2 * delta - 1);
+        this.setDeltaX(delta + 1);
         this.setDeltaY(delta);
         directionX = KeyEvent.VK_RIGHT;
         directionY = KeyEvent.VK_UP;
@@ -52,10 +52,6 @@ public class Ball extends MoveableObject {
 	
 	public void move() {
 		//border detect
-		if (this.getY() <= 36 + delta) {
-			this.setY(36 + delta);
-			switchDirectionY();
-		}
 		if (this.getX() <= 12 + delta) {
 			this.setX(12 + delta);
 			switchDirectionX();
@@ -64,11 +60,16 @@ public class Ball extends MoveableObject {
 			this.setX(706 - this.getWidth() - delta);
 			switchDirectionX();
 		}
-		
+		if (this.getY() <= 36 + delta) {
+			this.setY(36 + delta);
+			switchDirectionY();
+		}
+		/*
 		if (this.getY() >= 420 + delta) {
 			this.setY(420 + delta);
 			switchDirectionY();
 		}
+		*/
     	
 		this.direction = directionX;
 		super.move();
